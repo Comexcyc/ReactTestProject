@@ -6,15 +6,19 @@ import {
   Route,
   Routes
 } from "react-router-dom";
+import ProductCatalogPage from "./pages/ProductCatalogPage.jsx";
+import QueryPage from "./pages/QueryPage.jsx";
 
 const content = {
   en: {
     langCode: "en",
     nav: {
       products: "Products",
+      catalog: "Catalog",
       ranges: "Selection Guide",
       featured: "Featured",
       hybridSeries: "Hybrid Series Data",
+      query: "Product Query",
       about: "About",
       certifications: "Certifications",
       contact: "Contact"
@@ -45,6 +49,56 @@ const content = {
     contact: {
       email: "Email: sales@jodo.com.cn",
       website: "Website: www.jodo.com.cn"
+    },
+    search: {
+      placeholder: "Search part number or series...",
+      button: "Search",
+      heroHint: "Quick search across 18,000+ parts in the live catalog."
+    },
+    catalog: {
+      title: "Product Catalog",
+      intro:
+        "Browse JODO product families and model series from the live MDB catalog.",
+      categories: "Categories",
+      models: "models",
+      modelCount: "Model series",
+      partCount: "Available parts",
+      standard: "Standard",
+      voltageRange: "Voltage range",
+      capacitanceRange: "Capacitance range",
+      availableParts: "Available parts",
+      viewParts: "View parts",
+      loading: "Loading catalog...",
+      loadFailed: "Failed to load catalog."
+    },
+    query: {
+      title: "Live Product Query",
+      intro:
+        "Search the JODO MDB catalog in real time through the API layer. The browser cannot read MDB files directly.",
+      source: "Data source",
+      records: "Product records",
+      updated: "Last updated",
+      partNumber: "Part number",
+      seriesId: "Series ID",
+      capMin: "Min capacitance (uF)",
+      capMax: "Max capacitance (uF)",
+      voltMin: "Min voltage (V)",
+      voltMax: "Max voltage (V)",
+      search: "Search",
+      searching: "Searching...",
+      reset: "Reset",
+      found: "Matches found",
+      noResults: "No matching products.",
+      searchFailed: "Search failed.",
+      apiUnavailable: "API server is not running. Start it with npm run dev.",
+      columns: {
+        partNumber: "Part Number",
+        seriesId: "Series",
+        description: "Description",
+        voltage: "Voltage (V)",
+        capacitance: "Capacitance (uF)",
+        esr: "ESR"
+      }
     },
     ranges: {
       capacitanceTitle: "Capacitance Ranges",
@@ -166,9 +220,11 @@ const content = {
     langCode: "zh-CN",
     nav: {
       products: "产品",
+      catalog: "产品目录",
       ranges: "选型指南",
       featured: "重点系列",
       hybridSeries: "混合电容数据",
+      query: "产品查询",
       about: "关于我们",
       certifications: "资质认证",
       contact: "联系我们"
@@ -195,6 +251,55 @@ const content = {
     contact: {
       email: "邮箱: sales@jodo.com.cn",
       website: "网站: www.jodo.com.cn"
+    },
+    search: {
+      placeholder: "搜索料号或系列...",
+      button: "搜索",
+      heroHint: "在实时产品库中快速搜索 18,000+ 料号。"
+    },
+    catalog: {
+      title: "产品目录",
+      intro: "浏览来自 MDB 数据库的 JODO 产品大类与系列型号。",
+      categories: "产品分类",
+      models: "个型号",
+      modelCount: "系列型号",
+      partCount: "可用料号",
+      standard: "执行标准",
+      voltageRange: "电压范围",
+      capacitanceRange: "容量范围",
+      availableParts: "可用料号数",
+      viewParts: "查看料号",
+      loading: "目录加载中...",
+      loadFailed: "目录加载失败。"
+    },
+    query: {
+      title: "产品实时查询",
+      intro:
+        "通过 API 层实时查询 JODO 的 MDB 数据库。浏览器无法直接读取 MDB 文件。",
+      source: "数据源",
+      records: "产品记录数",
+      updated: "最后更新时间",
+      partNumber: "料号",
+      seriesId: "系列编号",
+      capMin: "最小容量 (uF)",
+      capMax: "最大容量 (uF)",
+      voltMin: "最小电压 (V)",
+      voltMax: "最大电压 (V)",
+      search: "查询",
+      searching: "查询中...",
+      reset: "重置",
+      found: "匹配结果",
+      noResults: "没有匹配的产品。",
+      searchFailed: "查询失败。",
+      apiUnavailable: "API 服务未启动，请运行 npm run dev。",
+      columns: {
+        partNumber: "料号",
+        seriesId: "系列",
+        description: "规格描述",
+        voltage: "电压 (V)",
+        capacitance: "容量 (uF)",
+        esr: "ESR"
+      }
     },
     ranges: {
       capacitanceTitle: "电容范围",
@@ -301,9 +406,11 @@ const content = {
     langCode: "ja",
     nav: {
       products: "製品",
+      catalog: "製品カタログ",
       ranges: "選定ガイド",
       featured: "注目シリーズ",
       hybridSeries: "ハイブリッド仕様",
+      query: "製品検索",
       about: "会社情報",
       certifications: "認証",
       contact: "お問い合わせ"
@@ -330,6 +437,55 @@ const content = {
     contact: {
       email: "メール: sales@jodo.com.cn",
       website: "Web: www.jodo.com.cn"
+    },
+    search: {
+      placeholder: "部品番号またはシリーズを検索...",
+      button: "検索",
+      heroHint: "ライブカタログの 18,000 件以上の部品を素早く検索。"
+    },
+    catalog: {
+      title: "製品カタログ",
+      intro: "MDB データベースから JODO の製品カテゴリとシリーズを閲覧できます。",
+      categories: "カテゴリ",
+      models: "モデル",
+      modelCount: "シリーズ数",
+      partCount: "部品数",
+      standard: "規格",
+      voltageRange: "電圧範囲",
+      capacitanceRange: "容量範囲",
+      availableParts: "利用可能部品数",
+      viewParts: "部品を見る",
+      loading: "カタログ読み込み中...",
+      loadFailed: "カタログの読み込みに失敗しました。"
+    },
+    query: {
+      title: "製品リアルタイム検索",
+      intro:
+        "API 経由で JODO の MDB データベースをリアルタイム検索します。ブラウザは MDB を直接読めません。",
+      source: "データソース",
+      records: "製品件数",
+      updated: "最終更新",
+      partNumber: "部品番号",
+      seriesId: "シリーズ ID",
+      capMin: "最小容量 (uF)",
+      capMax: "最大容量 (uF)",
+      voltMin: "最小電圧 (V)",
+      voltMax: "最大電圧 (V)",
+      search: "検索",
+      searching: "検索中...",
+      reset: "リセット",
+      found: "一致件数",
+      noResults: "一致する製品がありません。",
+      searchFailed: "検索に失敗しました。",
+      apiUnavailable: "API サーバーが起動していません。npm run dev を実行してください。",
+      columns: {
+        partNumber: "部品番号",
+        seriesId: "シリーズ",
+        description: "仕様",
+        voltage: "電圧 (V)",
+        capacitance: "容量 (uF)",
+        esr: "ESR"
+      }
     },
     ranges: {
       capacitanceTitle: "静電容量レンジ",
@@ -452,9 +608,11 @@ function App() {
   const navItems = useMemo(
     () => [
       { to: "/products", label: t.nav.products },
+      { to: "/catalog", label: t.nav.catalog },
       { to: "/selection-guide", label: t.nav.ranges },
       { to: "/featured", label: t.nav.featured },
       { to: "/hybrid-series", label: t.nav.hybridSeries },
+      { to: "/query", label: t.nav.query },
       { to: "/about", label: t.nav.about },
       { to: "/certifications", label: t.nav.certifications },
       { to: "/contact", label: t.nav.contact }
@@ -528,7 +686,7 @@ function App() {
                         <NavLink to="/contact" className="btn primary">
                           {t.hero.primaryBtn}
                         </NavLink>
-                        <NavLink to="/hybrid-series" className="btn ghost">
+                        <NavLink to="/catalog" className="btn ghost">
                           {t.hero.secondaryBtn}
                         </NavLink>
                       </div>
@@ -674,6 +832,11 @@ function App() {
                 </section>
               }
             />
+            <Route
+              path="/catalog"
+              element={<ProductCatalogPage t={t} language={language} />}
+            />
+            <Route path="/query" element={<QueryPage t={t} />} />
             <Route
               path="/contact"
               element={

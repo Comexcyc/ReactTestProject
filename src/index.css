@@ -131,10 +131,15 @@ body {
   white-space: nowrap;
 }
 
-.catalog-search-hint {
-  margin: 0.55rem 0 0;
-  color: #6e6e73;
-  font-size: 0.9rem;
+.catalog-search-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(29, 29, 31, 0.08);
+}
+
+.catalog-search-section h4 {
+  margin-top: 0;
+  color: #1d1d1f;
 }
 
 .lang-switch {
@@ -160,13 +165,80 @@ body {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   padding: 6rem 0;
-  background: linear-gradient(180deg, #ffffff, #f7f9ff);
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 58%, #eef4ff 100%);
   color: #1d1d1f;
   border-bottom: 1px solid rgba(29, 29, 31, 0.06);
 }
 
-.eyebrow {
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-visual {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-visual-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+
+.hero-visual-glow-a {
+  width: 28rem;
+  height: 28rem;
+  right: 8%;
+  top: -4rem;
+  background: rgba(0, 113, 227, 0.12);
+}
+
+.hero-visual-glow-b {
+  width: 22rem;
+  height: 22rem;
+  right: 24%;
+  bottom: -6rem;
+  background: rgba(90, 200, 250, 0.14);
+}
+
+.hero-visual-mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 78% 28%, rgba(0, 113, 227, 0.08), transparent 34%),
+    linear-gradient(rgba(0, 113, 227, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 113, 227, 0.035) 1px, transparent 1px);
+  background-size: auto, 42px 42px, 42px 42px;
+  mask-image: linear-gradient(90deg, transparent 0%, black 42%, black 100%);
+}
+
+.hero-visual-art {
+  position: absolute;
+  right: -2%;
+  top: 50%;
+  width: min(58%, 640px);
+  transform: translateY(-50%);
+  opacity: 0.9;
+}
+
+.hero-visual-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.96) 38%,
+    rgba(247, 249, 255, 0.72) 58%,
+    rgba(247, 249, 255, 0.2) 100%
+  );
+}
+
+.hero .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
@@ -216,6 +288,28 @@ body {
   border: 1px solid rgba(29, 29, 31, 0.12);
   color: #1d1d1f;
   background: #ffffff;
+}
+
+.hero .btn.ghost {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 900px) {
+  .hero-visual-art {
+    width: 88%;
+    right: -18%;
+    opacity: 0.55;
+  }
+
+  .hero-visual-fade {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.82) 42%,
+      rgba(247, 249, 255, 0.45) 100%
+    );
+  }
 }
 
 .tech-metrics {
@@ -387,6 +481,90 @@ body {
   color: #424245;
 }
 
+.query-summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.query-scroll-hint {
+  margin: 0;
+  color: #6e6e73;
+  font-size: 0.88rem;
+}
+
+.query-page-indicator {
+  margin: 0;
+  color: #424245;
+  font-size: 0.92rem;
+}
+
+.query-row-selected {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.65rem;
+  background: rgba(0, 113, 227, 0.08);
+  color: #1d1d1f;
+  font-size: 0.92rem;
+}
+
+.query-row-part {
+  color: #6e6e73;
+}
+
+.query-results .table-wrap.results-scroll {
+  max-height: min(60vh, 480px);
+  overflow: auto;
+  border: 1px solid rgba(29, 29, 31, 0.08);
+  border-radius: 0.75rem;
+  margin-top: 0;
+}
+
+.query-results .spec-table {
+  margin-top: 0;
+}
+
+.query-results .spec-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f7f7f8;
+  box-shadow: 0 1px 0 rgba(29, 29, 31, 0.08);
+}
+
+.query-results .result-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.query-results .result-row:hover {
+  background: rgba(0, 113, 227, 0.04);
+}
+
+.query-results .result-row.selected {
+  background: rgba(0, 113, 227, 0.1);
+}
+
+.query-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.query-pagination-status {
+  min-width: 7rem;
+  text-align: center;
+  color: #424245;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
 .query-error {
   color: #b42318;
   font-weight: 600;
@@ -472,8 +650,16 @@ body {
   font-size: 0.9rem;
 }
 
+.catalog-search-hint {
+  margin: 0.55rem 0 0;
+  color: #6e6e73;
+  font-size: 0.9rem;
+}
+
 .catalog-link {
-  margin-top: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font: inherit;
 }
 
 @media (max-width: 900px) {

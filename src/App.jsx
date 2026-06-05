@@ -4,11 +4,12 @@ import {
   NavLink,
   Navigate,
   Route,
-  Routes
+  Routes,
+  useLocation
 } from "react-router-dom";
 import PageTransition from "./components/PageTransition.jsx";
+import HeroBackground from "./components/HeroBackground.jsx";
 import ProductCatalogPage from "./pages/ProductCatalogPage.jsx";
-import QueryPage from "./pages/QueryPage.jsx";
 
 const content = {
   en: {
@@ -19,7 +20,6 @@ const content = {
       ranges: "Selection Guide",
       featured: "Featured",
       hybridSeries: "Hybrid Series Data",
-      query: "Product Query",
       about: "About",
       certifications: "Certifications",
       contact: "Contact"
@@ -52,14 +52,15 @@ const content = {
       website: "Website: www.jodo.com.cn"
     },
     search: {
-      placeholder: "Search part number or series...",
+      placeholder: "Search part number, category, or series...",
       button: "Search",
-      heroHint: "Quick search across 18,000+ parts in the live catalog."
+      heroHint:
+        "Search by part number, product category (e.g. solid tantalum), or model series."
     },
     catalog: {
       title: "Product Catalog",
       intro:
-        "Browse JODO product families and model series from the live MDB catalog.",
+        "Browse product families and search part numbers in one place, powered by the live MDB catalog.",
       categories: "Categories",
       models: "models",
       modelCount: "Model series",
@@ -75,10 +76,12 @@ const content = {
     query: {
       title: "Live Product Query",
       intro:
-        "Search the JODO MDB catalog in real time through the API layer. The browser cannot read MDB files directly.",
+        "Search by part number, category name, or model series. Combine with capacitance and voltage filters as needed.",
       source: "Data source",
       records: "Product records",
       updated: "Last updated",
+      keyword: "Keyword",
+      keywordPlaceholder: "THQ1 or solid tantalum capacitor",
       partNumber: "Part number",
       seriesId: "Series ID",
       capMin: "Min capacitance (uF)",
@@ -89,6 +92,12 @@ const content = {
       searching: "Searching...",
       reset: "Reset",
       found: "Matches found",
+      page: "Page",
+      pageOf: "Page {current} / {total}",
+      prevPage: "Previous",
+      nextPage: "Next",
+      selectedItem: "Selected",
+      itemRank: "Item {rank} of {total}",
       noResults: "No matching products.",
       searchFailed: "Search failed.",
       apiUnavailable: "API server is not running. Start it with npm run dev.",
@@ -225,7 +234,6 @@ const content = {
       ranges: "选型指南",
       featured: "重点系列",
       hybridSeries: "混合电容数据",
-      query: "产品查询",
       about: "关于我们",
       certifications: "资质认证",
       contact: "联系我们"
@@ -254,13 +262,13 @@ const content = {
       website: "网站: www.jodo.com.cn"
     },
     search: {
-      placeholder: "搜索料号或系列...",
+      placeholder: "搜索料号、产品分类或系列...",
       button: "搜索",
-      heroHint: "在实时产品库中快速搜索 18,000+ 料号。"
+      heroHint: "支持按料号、产品分类（如固体电解质钽电容器）或系列型号搜索。"
     },
     catalog: {
       title: "产品目录",
-      intro: "浏览来自 MDB 数据库的 JODO 产品大类与系列型号。",
+      intro: "在同一页面浏览产品分类并查询料号，数据来自 MDB 实时目录。",
       categories: "产品分类",
       models: "个型号",
       modelCount: "系列型号",
@@ -276,10 +284,12 @@ const content = {
     query: {
       title: "产品实时查询",
       intro:
-        "通过 API 层实时查询 JODO 的 MDB 数据库。浏览器无法直接读取 MDB 文件。",
+        "可按料号、产品分类名称或系列型号搜索，并可配合容量、电压等条件筛选。",
       source: "数据源",
       records: "产品记录数",
       updated: "最后更新时间",
+      keyword: "关键词",
+      keywordPlaceholder: "THQ1 或 固体电解质钽电容器",
       partNumber: "料号",
       seriesId: "系列编号",
       capMin: "最小容量 (uF)",
@@ -290,6 +300,12 @@ const content = {
       searching: "查询中...",
       reset: "重置",
       found: "匹配结果",
+      page: "页码",
+      pageOf: "第 {current} / {total} 页",
+      prevPage: "上一页",
+      nextPage: "下一页",
+      selectedItem: "当前选中",
+      itemRank: "第 {rank} 条 / 共 {total} 条",
       noResults: "没有匹配的产品。",
       searchFailed: "查询失败。",
       apiUnavailable: "API 服务未启动，请运行 npm run dev。",
@@ -411,7 +427,6 @@ const content = {
       ranges: "選定ガイド",
       featured: "注目シリーズ",
       hybridSeries: "ハイブリッド仕様",
-      query: "製品検索",
       about: "会社情報",
       certifications: "認証",
       contact: "お問い合わせ"
@@ -440,13 +455,15 @@ const content = {
       website: "Web: www.jodo.com.cn"
     },
     search: {
-      placeholder: "部品番号またはシリーズを検索...",
+      placeholder: "部品番号、カテゴリ、シリーズを検索...",
       button: "検索",
-      heroHint: "ライブカタログの 18,000 件以上の部品を素早く検索。"
+      heroHint:
+        "部品番号、製品カテゴリ（例：固体電解質タンタルコンデンサ）、シリーズ名で検索できます。"
     },
     catalog: {
       title: "製品カタログ",
-      intro: "MDB データベースから JODO の製品カテゴリとシリーズを閲覧できます。",
+      intro:
+        "MDB のライブカタログから、製品カテゴリの閲覧と部品検索を同一ページで行えます。",
       categories: "カテゴリ",
       models: "モデル",
       modelCount: "シリーズ数",
@@ -462,10 +479,12 @@ const content = {
     query: {
       title: "製品リアルタイム検索",
       intro:
-        "API 経由で JODO の MDB データベースをリアルタイム検索します。ブラウザは MDB を直接読めません。",
+        "部品番号、カテゴリ名、シリーズ名で検索でき、容量・電圧条件と組み合わせられます。",
       source: "データソース",
       records: "製品件数",
       updated: "最終更新",
+      keyword: "キーワード",
+      keywordPlaceholder: "THQ1 または 固体電解質タンタル",
       partNumber: "部品番号",
       seriesId: "シリーズ ID",
       capMin: "最小容量 (uF)",
@@ -476,6 +495,12 @@ const content = {
       searching: "検索中...",
       reset: "リセット",
       found: "一致件数",
+      page: "ページ",
+      pageOf: "{current} / {total} ページ",
+      prevPage: "前へ",
+      nextPage: "次へ",
+      selectedItem: "選択中",
+      itemRank: "{total} 件中 {rank} 件目",
       noResults: "一致する製品がありません。",
       searchFailed: "検索に失敗しました。",
       apiUnavailable: "API サーバーが起動していません。npm run dev を実行してください。",
@@ -598,6 +623,11 @@ const content = {
   }
 };
 
+function QueryRedirect() {
+  const { search } = useLocation();
+  return <Navigate to={`/catalog${search}`} replace />;
+}
+
 function App() {
   const [language, setLanguage] = useState("en");
   const t = content[language];
@@ -613,7 +643,6 @@ function App() {
       { to: "/selection-guide", label: t.nav.ranges },
       { to: "/featured", label: t.nav.featured },
       { to: "/hybrid-series", label: t.nav.hybridSeries },
-      { to: "/query", label: t.nav.query },
       { to: "/about", label: t.nav.about },
       { to: "/certifications", label: t.nav.certifications },
       { to: "/contact", label: t.nav.contact }
@@ -680,7 +709,8 @@ function App() {
               element={
                 <>
                   <section className="hero">
-                    <div className="container">
+                    <HeroBackground />
+                    <div className="container hero-content">
                       <p className="eyebrow">{t.hero.eyebrow}</p>
                       <h2>{t.hero.title}</h2>
                       <p>{t.hero.body}</p>
@@ -838,7 +868,7 @@ function App() {
               path="/catalog"
               element={<ProductCatalogPage t={t} language={language} />}
             />
-            <Route path="/query" element={<QueryPage t={t} />} />
+            <Route path="/query" element={<QueryRedirect />} />
             <Route
               path="/contact"
               element={

@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function GlobalSearch({ t }) {
-  const [query, setQuery] = useState("");
-  const navigate = useNavigate();
+function GlobalSearch({ t, onSearch, defaultValue = "" }) {
+  const [query, setQuery] = useState(defaultValue);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -12,15 +10,11 @@ function GlobalSearch({ t }) {
       return;
     }
 
-    navigate(`/query?q=${encodeURIComponent(value)}`);
+    onSearch(value);
   }
 
   return (
-    <form
-      className="catalog-search"
-      onSubmit={handleSubmit}
-      role="search"
-    >
+    <form className="catalog-search" onSubmit={handleSubmit} role="search">
       <input
         type="search"
         value={query}

@@ -136,6 +136,78 @@ function sanitizeLikeInput(value) {
   return value.replace(/[^a-zA-Z0-9*_()%.-]/g, "");
 }
 
+function normalizeKeyword(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase();
+}
+
+function resolveModelIdsFromKeyword(keyword) {
+  const pattern = normalizeKeyword(keyword);
+  if (!pattern) {
+    return new Set();
+  }
+
+  const modelIds = new Set();
+
+  for (const series of seriesCache) {
+    const seriesText = [
+      series.name,
+      series.nameEn,
+      series.intro
+    ]
+      .map(normalizeKeyword)
+      .join(" ");
+
+    if (seriesText.includes(pattern)) {
+      for (const type of typeCache) {
+        if (type.seriesId === series.seriesId && type.modelId) {
+          modelIds.add(type.modelId.toLowerCase());
+        }
+      }
+    }
+  }
+
+  for (const type of typeCache) {
+    const typeText = [
+      type.modelId,
+      type.description,
+      type.descriptionEn,
+      type.standard
+    ]
+      .map(normalizeKeyword)
+      .join(" ");
+
+    if (typeText.includes(pattern) && type.modelId) {
+      modelIds.add(type.modelId.toLowerCase());
+    }
+  }
+
+  return modelIds;
+}
+
+function matchesKeyword(row, keyword, modelIds) {
+  const pattern = normalizeKeyword(keyword);
+  if (!pattern) {
+    return true;
+  }
+
+  const productText = [
+    row.partNumber,
+    row.seriesId,
+    row.description,
+    row.tolerance,
+    row.caseCode
+  ]
+    .map(normalizeKeyword)
+    .join(" ");
+
+  return (
+    productText.includes(pattern) ||
+    modelIds.has(row.seriesId.toLowerCase())
+  );
+}
+
 function toNumber(value) {
   if (value === undefined || value === null || value === "") {
     return null;
@@ -246,6 +318,8 @@ export function searchProducts(filters = {}) {
 
   const {
     partNumber = "",
+    keyword = "",
+    q = "",
     seriesId = "",
     capMin,
     capMax,
@@ -255,8 +329,12 @@ export function searchProducts(filters = {}) {
     offset = 0
   } = filters;
 
+  const searchKeyword = normalizeKeyword(keyword || q);
   const safePartNumber = sanitizeLikeInput(partNumber);
   const safeSeriesId = sanitizeLikeInput(seriesId);
+  const modelIdsFromKeyword = searchKeyword
+    ? resolveModelIdsFromKeyword(searchKeyword)
+    : new Set();
   const capMinNum = toNumber(capMin);
   const capMaxNum = toNumber(capMax);
   const voltMinNum = toNumber(voltMin);
@@ -266,7 +344,11 @@ export function searchProducts(filters = {}) {
 
   let rows = productCache;
 
-  if (safePartNumber) {
+  if (searchKeyword) {
+    rows = rows.filter((row) =>
+      matchesKeyword(row, searchKeyword, modelIdsFromKeyword)
+    );
+  } else if (safePartNumber) {
     const pattern = safePartNumber.toLowerCase();
     rows = rows.filter((row) =>
       row.partNumber.toLowerCase().includes(pattern)

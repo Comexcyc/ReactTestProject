@@ -6,6 +6,7 @@ import {
   Route,
   Routes
 } from "react-router-dom";
+import PageTransition from "./components/PageTransition.jsx";
 import ProductCatalogPage from "./pages/ProductCatalogPage.jsx";
 import QueryPage from "./pages/QueryPage.jsx";
 
@@ -671,7 +672,8 @@ function App() {
         </header>
 
         <main>
-          <Routes>
+          <PageTransition>
+            <Routes>
             <Route path="/" element={<Navigate to="/products" replace />} />
             <Route
               path="/products"
@@ -852,7 +854,8 @@ function App() {
               }
             />
             <Route path="*" element={<Navigate to="/products" replace />} />
-          </Routes>
+            </Routes>
+          </PageTransition>
         </main>
 
         <footer className="footer">

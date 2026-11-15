@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import GlobalSearch from "../components/GlobalSearch.jsx";
+import ProductDetailDrawer from "../components/ProductDetailDrawer.jsx";
+import { CatalogSkeleton, TableSkeleton } from "../components/Skeleton.jsx";
 
 const PAGE_SIZE = 100;
 
@@ -157,6 +159,46 @@ function ProductCatalogPage({ t, language }) {
     return type.description || type.modelId;
   }
 
+  const modelContextMap = useMemo(() => {
+    const map = new Map();
+
+    for (const seriesItem of catalog) {
+      for (const type of seriesItem.types || []) {
+        map.set(type.modelId.toLowerCase(), {
+          category: seriesLabel(seriesItem),
+          model: `${type.modelId} · ${typeLabel(type)}`
+        });
+      }
+    }
+
+    return map;
+  }, [catalog, language]);
+
+  function getModelContext(modelId) {
+    if (!modelId) {
+      return null;
+    }
+
+    return modelContextMap.get(String(modelId).toLowerCase()) ?? null;
+  }
+
+  const activeSearchContext = useMemo(() => {
+    if (form.seriesId) {
+      return (
+        getModelContext(form.seriesId) ?? {
+          category: form.seriesId,
+          model: form.seriesId
+        }
+      );
+    }
+
+    if (form.keyword && result?.items?.[0]?.seriesId) {
+      return getModelContext(result.items[0].seriesId);
+    }
+
+    return null;
+  }, [form.keyword, form.seriesId, result?.items, modelContextMap]);
+
   function updateField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
@@ -203,12 +245,12 @@ function ProductCatalogPage({ t, language }) {
   return (
     <section className="section">
       <div className="container">
-        <h3>{t.catalog.title}</h3>
+        <h3 className="section-heading">{t.catalog.title}</h3>
         <p className="catalog-intro">{t.catalog.intro}</p>
         <GlobalSearch t={t} onSearch={handleQuickSearch} />
         <p className="catalog-search-hint">{t.search.heroHint}</p>
 
-        {catalogLoading && <p>{t.catalog.loading}</p>}
+        {catalogLoading && <CatalogSkeleton />}
         {catalogError && <p className="query-error">{catalogError}</p>}
 
         {!catalogLoading && !catalogError && catalog.length > 0 && (
@@ -373,6 +415,8 @@ function ProductCatalogPage({ t, language }) {
 
           {searchError && <p className="query-error">{searchError}</p>}
 
+          {searchLoading && !result && <TableSkeleton rows={10} />}
+
           {result && (
             <article className="card query-results">
               <div className="query-summary-row">
@@ -385,6 +429,15 @@ function ProductCatalogPage({ t, language }) {
                   </p>
                 )}
               </div>
+
+              {activeSearchContext && (
+                <p className="query-breadcrumb">
+                  <span className="query-breadcrumb-label">{t.query.searchContext}</span>
+                  {activeSearchContext.category}
+                  <span aria-hidden="true"> › </span>
+                  {activeSearchContext.model}
+                </p>
+              )}
 
               {selectedRow && (
                 <p className="query-row-selected">
@@ -399,44 +452,48 @@ function ProductCatalogPage({ t, language }) {
               )}
 
               <div className="table-wrap results-scroll">
-                <table className="spec-table">
-                  <thead>
-                    <tr>
-                      <th>{t.query.columns.partNumber}</th>
-                      <th>{t.query.columns.seriesId}</th>
-                      <th>{t.query.columns.description}</th>
-                      <th>{t.query.columns.voltage}</th>
-                      <th>{t.query.columns.capacitance}</th>
-                      <th>{t.query.columns.esr}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {result.items.length === 0 ? (
+                {searchLoading ? (
+                  <TableSkeleton rows={10} />
+                ) : (
+                  <table className="spec-table">
+                    <thead>
                       <tr>
-                        <td colSpan="6">{t.query.noResults}</td>
+                        <th>{t.query.columns.partNumber}</th>
+                        <th>{t.query.columns.seriesId}</th>
+                        <th>{t.query.columns.description}</th>
+                        <th>{t.query.columns.voltage}</th>
+                        <th>{t.query.columns.capacitance}</th>
+                        <th>{t.query.columns.esr}</th>
                       </tr>
-                    ) : (
-                      result.items.map((item, index) => (
-                        <tr
-                          key={`${item.partNumber}-${item.seriesId}-${index}`}
-                          className={
-                            selectedRow?.index === index
-                              ? "result-row selected"
-                              : "result-row"
-                          }
-                          onClick={() => handleRowSelect(item, index)}
-                        >
-                          <td>{item.partNumber}</td>
-                          <td>{item.seriesId}</td>
-                          <td>{item.description}</td>
-                          <td>{item.ratingVoltage ?? "-"}</td>
-                          <td>{item.capacitance ?? "-"}</td>
-                          <td>{item.esr ?? "-"}</td>
+                    </thead>
+                    <tbody>
+                      {result.items.length === 0 ? (
+                        <tr>
+                          <td colSpan="6">{t.query.noResults}</td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        result.items.map((item, index) => (
+                          <tr
+                            key={`${item.partNumber}-${item.seriesId}-${index}`}
+                            className={
+                              selectedRow?.index === index
+                                ? "result-row selected"
+                                : "result-row"
+                            }
+                            onClick={() => handleRowSelect(item, index)}
+                          >
+                            <td>{item.partNumber}</td>
+                            <td>{item.seriesId}</td>
+                            <td>{item.description}</td>
+                            <td>{item.ratingVoltage ?? "-"}</td>
+                            <td>{item.capacitance ?? "-"}</td>
+                            <td>{item.esr ?? "-"}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               {totalPages > 1 && (
@@ -464,6 +521,18 @@ function ProductCatalogPage({ t, language }) {
               )}
             </article>
           )}
+
+          <ProductDetailDrawer
+            open={Boolean(selectedRow)}
+            item={selectedRow?.item ?? null}
+            rank={selectedRow?.rank ?? 0}
+            total={result?.total ?? 0}
+            context={
+              selectedRow ? getModelContext(selectedRow.item.seriesId) : null
+            }
+            t={t}
+            onClose={() => setSelectedRow(null)}
+          />
         </div>
       </div>
     </section>

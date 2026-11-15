@@ -9,7 +9,10 @@ import {
 } from "react-router-dom";
 import PageTransition from "./components/PageTransition.jsx";
 import HeroBackground from "./components/HeroBackground.jsx";
+import ScrollReveal from "./components/ScrollReveal.jsx";
+import TrustBar from "./components/TrustBar.jsx";
 import ProductCatalogPage from "./pages/ProductCatalogPage.jsx";
+import { useDocumentTitle } from "./hooks/useDocumentTitle.js";
 
 const content = {
   en: {
@@ -29,7 +32,56 @@ const content = {
       title: "Modern components. Proven reliability.",
       body: "JODO provides high-reliability electronic components and engineering support for demanding industries.",
       primaryBtn: "Request a Quote",
-      secondaryBtn: "Explore Products"
+      secondaryBtn: "Explore Products",
+      visualTags: ["Aerospace", "Satellite", "Space-grade components"]
+    },
+    trust: {
+      ariaLabel: "Company credentials",
+      parts: "Part numbers in catalog",
+      categories: "Product categories",
+      cert: "Quality standard",
+      certValue: "GJB9001B",
+      industry: "Core applications",
+      industryValue: "Aerospace"
+    },
+    meta: {
+      default: {
+        title: "Industrial Components",
+        description:
+          "JODO high-reliability electronic components for aerospace, defense, and industrial applications."
+      },
+      products: {
+        title: "Products",
+        description: "Explore JODO core capacitor product lines and engineering capabilities."
+      },
+      catalog: {
+        title: "Product Catalog",
+        description: "Browse and search JODO part numbers from the live MDB catalog."
+      },
+      ranges: {
+        title: "Selection Guide",
+        description: "Capacitance and voltage selection ranges for JODO components."
+      },
+      featured: {
+        title: "Featured Series",
+        description: "Highlighted JODO product series and specifications."
+      },
+      hybridSeries: {
+        title: "Hybrid Series",
+        description: "High-energy hybrid capacitor series data and specifications."
+      },
+      about: {
+        title: "About",
+        description: "Learn about JODO and our modernization approach."
+      },
+      certifications: {
+        title: "Certifications",
+        description: "JODO quality standards and certifications."
+      },
+      contact: {
+        title: "Contact",
+        description: "Contact JODO for quotes and engineering support."
+      }
     },
     sections: {
       products: "Core Product Lines",
@@ -98,6 +150,11 @@ const content = {
       nextPage: "Next",
       selectedItem: "Selected",
       itemRank: "Item {rank} of {total}",
+      detailTitle: "Part detail",
+      closeDetail: "Close detail panel",
+      tolerance: "Tolerance",
+      caseCode: "Case code",
+      searchContext: "Search context",
       noResults: "No matching products.",
       searchFailed: "Search failed.",
       apiUnavailable: "API server is not running. Start it with npm run dev.",
@@ -243,7 +300,55 @@ const content = {
       title: "现代化元件，可靠性能。",
       body: "JODO 为高要求行业提供高可靠性电子元器件与工程支持服务。",
       primaryBtn: "获取报价",
-      secondaryBtn: "查看产品"
+      secondaryBtn: "查看产品",
+      visualTags: ["航空航天", "卫星应用", "宇航级元器件"]
+    },
+    trust: {
+      ariaLabel: "企业资质",
+      parts: "目录料号数量",
+      categories: "产品分类",
+      cert: "质量标准",
+      certValue: "GJB9001B",
+      industry: "核心应用",
+      industryValue: "航空航天"
+    },
+    meta: {
+      default: {
+        title: "工业元器件",
+        description: "JODO 高可靠性电子元器件，服务航空航天、国防与工业领域。"
+      },
+      products: {
+        title: "产品",
+        description: "了解 JODO 核心电容产品线与工程能力。"
+      },
+      catalog: {
+        title: "产品目录",
+        description: "浏览并搜索 JODO 实时 MDB 产品目录。"
+      },
+      ranges: {
+        title: "选型指南",
+        description: "JODO 元器件容量与电压选型范围。"
+      },
+      featured: {
+        title: "重点系列",
+        description: "JODO 重点产品系列与规格亮点。"
+      },
+      hybridSeries: {
+        title: "混合电容数据",
+        description: "高能量混合电容系列参数与说明。"
+      },
+      about: {
+        title: "关于我们",
+        description: "了解 JODO 与网站现代化升级。"
+      },
+      certifications: {
+        title: "资质认证",
+        description: "JODO 质量标准与体系认证。"
+      },
+      contact: {
+        title: "联系我们",
+        description: "联系 JODO 获取报价与技术支持。"
+      }
     },
     sections: {
       products: "核心产品线",
@@ -306,6 +411,11 @@ const content = {
       nextPage: "下一页",
       selectedItem: "当前选中",
       itemRank: "第 {rank} 条 / 共 {total} 条",
+      detailTitle: "料号详情",
+      closeDetail: "关闭详情面板",
+      tolerance: "容差",
+      caseCode: "封装",
+      searchContext: "搜索上下文",
       noResults: "没有匹配的产品。",
       searchFailed: "查询失败。",
       apiUnavailable: "API 服务未启动，请运行 npm run dev。",
@@ -436,7 +546,55 @@ const content = {
       title: "モダンな部品、実証された信頼性。",
       body: "JODO は高信頼性電子部品とエンジニアリング支援を提供します。",
       primaryBtn: "見積もりを依頼",
-      secondaryBtn: "製品を見る"
+      secondaryBtn: "製品を見る",
+      visualTags: ["航空宇宙", "衛星用途", "宇宙グレード部品"]
+    },
+    trust: {
+      ariaLabel: "企業実績",
+      parts: "カタログ部品数",
+      categories: "製品カテゴリ",
+      cert: "品質基準",
+      certValue: "GJB9001B",
+      industry: "主要用途",
+      industryValue: "航空宇宙"
+    },
+    meta: {
+      default: {
+        title: "産業用部品",
+        description: "航空宇宙・防衛・産業向けの JODO 高信頼性電子部品。"
+      },
+      products: {
+        title: "製品",
+        description: "JODO の主要コンデンサ製品ラインをご覧ください。"
+      },
+      catalog: {
+        title: "製品カタログ",
+        description: "ライブ MDB カタログから部品を検索・閲覧できます。"
+      },
+      ranges: {
+        title: "選定ガイド",
+        description: "容量・電圧の選定範囲を確認できます。"
+      },
+      featured: {
+        title: "注目シリーズ",
+        description: "JODO の注目製品シリーズと仕様。"
+      },
+      hybridSeries: {
+        title: "ハイブリッド仕様",
+        description: "高エネルギー・ハイブリッドコンデンサシリーズ。"
+      },
+      about: {
+        title: "会社情報",
+        description: "JODO とサイト刷新について。"
+      },
+      certifications: {
+        title: "認証",
+        description: "JODO の品質基準と認証情報。"
+      },
+      contact: {
+        title: "お問い合わせ",
+        description: "見積もり・技術支援のお問い合わせ。"
+      }
     },
     sections: {
       products: "主要製品ライン",
@@ -501,6 +659,11 @@ const content = {
       nextPage: "次へ",
       selectedItem: "選択中",
       itemRank: "{total} 件中 {rank} 件目",
+      detailTitle: "部品詳細",
+      closeDetail: "詳細パネルを閉じる",
+      tolerance: "許容差",
+      caseCode: "ケース",
+      searchContext: "検索コンテキスト",
       noResults: "一致する製品がありません。",
       searchFailed: "検索に失敗しました。",
       apiUnavailable: "API サーバーが起動していません。npm run dev を実行してください。",
@@ -628,6 +791,27 @@ function QueryRedirect() {
   return <Navigate to={`/catalog${search}`} replace />;
 }
 
+function DocumentTitleUpdater({ t }) {
+  const location = useLocation();
+  const meta = useMemo(() => {
+    const routes = {
+      "/products": t.meta.products,
+      "/catalog": t.meta.catalog,
+      "/selection-guide": t.meta.ranges,
+      "/featured": t.meta.featured,
+      "/hybrid-series": t.meta.hybridSeries,
+      "/about": t.meta.about,
+      "/certifications": t.meta.certifications,
+      "/contact": t.meta.contact
+    };
+
+    return routes[location.pathname] ?? t.meta.default;
+  }, [location.pathname, t]);
+
+  useDocumentTitle(`${meta.title} | JODO`, meta.description);
+  return null;
+}
+
 function App() {
   const [language, setLanguage] = useState("en");
   const t = content[language];
@@ -652,6 +836,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <DocumentTitleUpdater t={t} />
       <div className="site">
         <div className="tech-bg" aria-hidden="true">
           <span className="orb orb-1" />
@@ -709,48 +894,54 @@ function App() {
               element={
                 <>
                   <section className="hero">
-                    <HeroBackground />
-                    <div className="container hero-content">
-                      <p className="eyebrow">{t.hero.eyebrow}</p>
-                      <h2>{t.hero.title}</h2>
-                      <p>{t.hero.body}</p>
-                      <div className="hero-actions">
-                        <NavLink to="/contact" className="btn primary">
-                          {t.hero.primaryBtn}
-                        </NavLink>
-                        <NavLink to="/catalog" className="btn ghost">
-                          {t.hero.secondaryBtn}
-                        </NavLink>
+                    <div className="container hero-inner">
+                      <div className="hero-content">
+                        <p className="eyebrow">{t.hero.eyebrow}</p>
+                        <h2>{t.hero.title}</h2>
+                        <p>{t.hero.body}</p>
+                        <div className="hero-actions">
+                          <NavLink to="/contact" className="btn primary">
+                            {t.hero.primaryBtn}
+                          </NavLink>
+                          <NavLink to="/catalog" className="btn ghost">
+                            {t.hero.secondaryBtn}
+                          </NavLink>
+                        </div>
+                        <div className="tech-metrics">
+                          <span>220,000uF</span>
+                          <span>0.0025 ohm ESR</span>
+                          <span>MTBF 10,000,000h</span>
+                        </div>
                       </div>
-                      <div className="tech-metrics">
-                        <span>220,000uF</span>
-                        <span>0.0025 ohm ESR</span>
-                        <span>MTBF 10,000,000h</span>
-                      </div>
+                      <HeroBackground labels={t.hero.visualTags} />
                     </div>
                   </section>
-                  <section className="section">
-                    <div className="container">
-                      <h3>{t.sections.products}</h3>
-                      <div className="grid">
-                        {t.products.map((product) => (
-                          <article key={product.name} className="card">
-                            <h4>{product.name}</h4>
-                            <p>{product.description}</p>
-                          </article>
-                        ))}
+                  <TrustBar t={t} />
+                  <ScrollReveal>
+                    <section className="section">
+                      <div className="container">
+                        <h3 className="section-heading">{t.sections.products}</h3>
+                        <div className="grid">
+                          {t.products.map((product) => (
+                            <article key={product.name} className="card">
+                              <h4>{product.name}</h4>
+                              <p>{product.description}</p>
+                            </article>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </section>
+                    </section>
+                  </ScrollReveal>
                 </>
               }
             />
             <Route
               path="/selection-guide"
               element={
-                <section className="section">
-                  <div className="container">
-                    <h3>{t.sections.ranges}</h3>
+                <ScrollReveal>
+                  <section className="section">
+                    <div className="container">
+                      <h3 className="section-heading">{t.sections.ranges}</h3>
                     <div className="grid">
                       <article className="card">
                         <h4>{t.ranges.capacitanceTitle}</h4>
@@ -769,16 +960,18 @@ function App() {
                         </ul>
                       </article>
                     </div>
-                  </div>
-                </section>
+                    </div>
+                  </section>
+                </ScrollReveal>
               }
             />
             <Route
               path="/featured"
               element={
-                <section className="section">
-                  <div className="container">
-                    <h3>{t.sections.featured}</h3>
+                <ScrollReveal>
+                  <section className="section">
+                    <div className="container">
+                      <h3 className="section-heading">{t.sections.featured}</h3>
                     <article className="card">
                       <h4>{t.featured.title}</h4>
                       <ul className="list">
@@ -789,6 +982,7 @@ function App() {
                     </article>
                   </div>
                 </section>
+                </ScrollReveal>
               }
             />
             <Route

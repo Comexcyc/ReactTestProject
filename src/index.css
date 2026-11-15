@@ -91,6 +91,10 @@ body {
   padding: 0.65rem 0;
 }
 
+.nav-panel {
+  display: contents;
+}
+
 .nav nav {
   display: flex;
   gap: 1rem;
@@ -114,6 +118,42 @@ body {
   color: #1d1d1f;
   border-bottom: 2px solid #0071e3;
   padding-bottom: 0.2rem;
+}
+
+.nav-toggle {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(29, 29, 31, 0.12);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.9);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.28rem;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 1.05rem;
+  height: 1.5px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav.is-open .nav-toggle span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.nav.is-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav.is-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
 }
 
 .catalog-search {
@@ -776,11 +816,66 @@ body {
 }
 
 @media (max-width: 760px) {
-  .nav nav {
-    width: 100%;
-    order: 3;
-    flex-wrap: wrap;
-    gap: 0.7rem;
+  .nav {
+    flex-wrap: nowrap;
+    min-height: 56px;
+    padding: 0.45rem 0;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .nav-panel {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.35rem);
+    z-index: 30;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.45rem 0.55rem 0.85rem;
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(29, 29, 31, 0.08);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+    max-height: min(78vh, 32rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav.is-open .nav-panel {
+    display: flex;
+  }
+
+  .nav-panel nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-panel nav a {
+    padding: 0.85rem 0.7rem;
+    border-bottom: 1px solid rgba(29, 29, 31, 0.06);
+  }
+
+  .nav-panel nav a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-panel nav a.active-link {
+    border-bottom-color: transparent;
+    box-shadow: inset 3px 0 0 #0071e3;
+    background: rgba(0, 113, 227, 0.06);
+    border-radius: 0.55rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .nav-panel .lang-switch {
+    padding: 0.15rem 0.35rem 0.2rem;
   }
 }
 

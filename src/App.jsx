@@ -25,7 +25,9 @@ const content = {
       hybridSeries: "Hybrid Series Data",
       about: "About",
       certifications: "Certifications",
-      contact: "Contact"
+      contact: "Contact",
+      openMenu: "Open menu",
+      closeMenu: "Close menu"
     },
     hero: {
       eyebrow: "Industrial Electronics Supplier",
@@ -293,7 +295,9 @@ const content = {
       hybridSeries: "混合电容数据",
       about: "关于我们",
       certifications: "资质认证",
-      contact: "联系我们"
+      contact: "联系我们",
+      openMenu: "打开菜单",
+      closeMenu: "关闭菜单"
     },
     hero: {
       eyebrow: "工业电子元器件供应商",
@@ -539,7 +543,9 @@ const content = {
       hybridSeries: "ハイブリッド仕様",
       about: "会社情報",
       certifications: "認証",
-      contact: "お問い合わせ"
+      contact: "お問い合わせ",
+      openMenu: "メニューを開く",
+      closeMenu: "メニューを閉じる"
     },
     hero: {
       eyebrow: "産業用電子部品サプライヤー",
@@ -814,11 +820,30 @@ function DocumentTitleUpdater({ t }) {
 
 function App() {
   const [language, setLanguage] = useState("en");
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = content[language];
 
   useEffect(() => {
     document.documentElement.lang = t.langCode;
   }, [t.langCode]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 760) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const navItems = useMemo(
     () => [
@@ -834,6 +859,8 @@ function App() {
     [t]
   );
 
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <BrowserRouter>
       <DocumentTitleUpdater t={t} />
@@ -844,43 +871,58 @@ function App() {
           <span className="grid-glow" />
         </div>
         <header className="topbar">
-          <div className="container nav">
-            <NavLink to="/" className="brand">
+          <div className={`container nav${menuOpen ? " is-open" : ""}`}>
+            <NavLink to="/" className="brand" onClick={closeMenu}>
               JODO
             </NavLink>
-            <nav>
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={({ isActive }) => (isActive ? "active-link" : "")}
+            <button
+              type="button"
+              className="nav-toggle"
+              aria-expanded={menuOpen}
+              aria-controls="primary-nav-panel"
+              aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+            <div id="primary-nav-panel" className="nav-panel">
+              <nav>
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    className={({ isActive }) => (isActive ? "active-link" : "")}
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </nav>
+              <div className="lang-switch" aria-label="Language Switch">
+                <button
+                  type="button"
+                  className={language === "en" ? "active" : ""}
+                  onClick={() => setLanguage("en")}
                 >
-                  {item.label}
-                </NavLink>
-              ))}
-            </nav>
-            <div className="lang-switch" aria-label="Language Switch">
-              <button
-                type="button"
-                className={language === "en" ? "active" : ""}
-                onClick={() => setLanguage("en")}
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                className={language === "zh" ? "active" : ""}
-                onClick={() => setLanguage("zh")}
-              >
-                中文
-              </button>
-              <button
-                type="button"
-                className={language === "ja" ? "active" : ""}
-                onClick={() => setLanguage("ja")}
-              >
-                日本語
-              </button>
+                  EN
+                </button>
+                <button
+                  type="button"
+                  className={language === "zh" ? "active" : ""}
+                  onClick={() => setLanguage("zh")}
+                >
+                  中文
+                </button>
+                <button
+                  type="button"
+                  className={language === "ja" ? "active" : ""}
+                  onClick={() => setLanguage("ja")}
+                >
+                  日本語
+                </button>
+              </div>
             </div>
           </div>
         </header>

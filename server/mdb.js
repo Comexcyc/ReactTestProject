@@ -108,32 +108,8 @@ function exportTable(tableName) {
   return parseCsv(result.stdout);
 }
 
-function runSql(sql) {
-  ensureMdbExists();
-  const result = spawnSync("mdb-sql", ["-H", "-P", MDB_PATH], {
-    input: sql,
-    encoding: "utf8",
-    maxBuffer: 16 * 1024 * 1024
-  });
-
-  if (result.error) {
-    throw result.error;
-  }
-
-  const lines = result.stdout
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("ERROR:"));
-
-  if (lines.length === 0) {
-    return [];
-  }
-
-  return lines.map((line) => line.split("\t"));
-}
-
 function sanitizeLikeInput(value) {
-  return value.replace(/[^a-zA-Z0-9*_()%.-]/g, "");
+  return String(value ?? "").replace(/[^a-zA-Z0-9*_()%.-]/g, "");
 }
 
 function normalizeKeyword(value) {
@@ -217,6 +193,8 @@ function toNumber(value) {
 }
 
 function mapProductRow(row) {
+  // Intentionally omit unit_price / pricing fields from public API responses.
+  // Source data in the MDB file is left unchanged.
   return {
     partNumber: row["JODO_P/N"] ?? "",
     seriesId: row.jodo_series_id ?? "",
@@ -225,8 +203,7 @@ function mapProductRow(row) {
     capacitance: toNumber(row.capacitance),
     esr: toNumber(row.ESR),
     tolerance: row.tolerance ?? "",
-    caseCode: row.case ?? "",
-    unitPrice: toNumber(row.unit_price)
+    caseCode: row.case ?? ""
   };
 }
 
@@ -241,8 +218,7 @@ function mapTypeRow(row) {
     voltMax: toNumber(row.VOLT_MAX),
     capMin: toNumber(row.CAPA_MIN),
     capMax: toNumber(row.CAPA_MAX),
-    features: stripHtml(row.features ?? "").slice(0, 180),
-    pdf: row.PDF ?? ""
+    features: stripHtml(row.features ?? "").slice(0, 180)
   };
 }
 
@@ -393,7 +369,6 @@ export function searchProducts(filters = {}) {
     total,
     limit: limitNum,
     offset: offsetNum,
-    source: "test-JODOUK.mdb",
     refreshedAt: new Date(cacheMtime).toISOString(),
     items
   };
@@ -401,13 +376,10 @@ export function searchProducts(filters = {}) {
 
 export function getMdbStatus() {
   ensureMdbExists();
-  const stat = fs.statSync(MDB_PATH);
   loadProducts();
   return {
-    file: path.basename(MDB_PATH),
-    sizeMb: Number((stat.size / (1024 * 1024)).toFixed(2)),
+    ok: true,
     productCount: productCache.length,
-    seriesCount: seriesCache.length,
-    lastModified: stat.mtime.toISOString()
+    seriesCount: seriesCache.length
   };
 }

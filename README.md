@@ -6,10 +6,22 @@ Modern React + Vite starter project for redesigning the JODO corporate website.
 
 1. Install dependencies:
    - `npm install`
-2. Start development server:
+2. Install Access DB tools (API reads the local catalog file):
+   - macOS: `brew install mdbtools`
+   - Ubuntu/Debian: `sudo apt-get install mdbtools`
+3. Place the private catalog database file at the repo root as `test-JODOUK.mdb`  
+   (this file is gitignored and must be shared privately, not committed).
+4. Optional: copy `.env.example` values into your shell / process manager.
+5. Start development server:
    - `npm run dev`
-3. Build for production:
+6. Build for production:
    - `npm run build`
+
+## Security notes
+
+- Public API responses intentionally omit pricing fields; source `unit_price` data in the MDB is not deleted.
+- API defaults to `127.0.0.1` and an allowlisted CORS origin list. Override with `HOST` / `CORS_ORIGINS` when deploying.
+- Do not commit `.mdb` files, credentials, or `.env` files.
 
 ## Goals
 

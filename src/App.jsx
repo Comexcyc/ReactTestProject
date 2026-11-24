@@ -845,17 +845,19 @@ function App() {
     };
   }, [menuOpen]);
 
+  // Keep selection-guide / featured in code for later; hide from nav for now.
   const navItems = useMemo(
-    () => [
-      { to: "/products", label: t.nav.products },
-      { to: "/catalog", label: t.nav.catalog },
-      { to: "/selection-guide", label: t.nav.ranges },
-      { to: "/featured", label: t.nav.featured },
-      { to: "/hybrid-series", label: t.nav.hybridSeries },
-      { to: "/about", label: t.nav.about },
-      { to: "/certifications", label: t.nav.certifications },
-      { to: "/contact", label: t.nav.contact }
-    ],
+    () =>
+      [
+        { to: "/products", label: t.nav.products },
+        { to: "/catalog", label: t.nav.catalog },
+        { to: "/selection-guide", label: t.nav.ranges, hidden: true },
+        { to: "/featured", label: t.nav.featured, hidden: true },
+        { to: "/hybrid-series", label: t.nav.hybridSeries },
+        { to: "/about", label: t.nav.about },
+        { to: "/certifications", label: t.nav.certifications },
+        { to: "/contact", label: t.nav.contact }
+      ].filter((item) => !item.hidden),
     [t]
   );
 

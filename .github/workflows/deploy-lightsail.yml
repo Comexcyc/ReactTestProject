@@ -4,15 +4,46 @@ on:
   push:
     branches:
       - main
+  pull_request:
   workflow_dispatch:
 
 concurrency:
-  group: lightsail-deploy
+  group: lightsail-deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  test:
+    name: Test & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install mdbtools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq mdbtools
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run automated tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
   deploy:
     name: SSH deploy
+    needs: test
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

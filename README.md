@@ -14,8 +14,25 @@ Modern React + Vite starter project for redesigning the JODO corporate website.
    - `npm run dev`
 5. Build for production:
    - `npm run build`
+6. Run automated tests (requires `mdbtools`):
+   - `npm test`
 
 The sample catalog database `test-JODOUK.mdb` is included for local testing.
+
+## CI before deploy
+
+GitHub Actions runs **test + production build** on every pull request and every push to `main`.
+
+Deploy to Lightsail only runs after tests pass, and only on:
+- push to `main`
+- manual **Run workflow**
+
+Locally you can mirror CI with:
+
+```bash
+npm test
+npm run build
+```
 
 ## Deploy to AWS Lightsail
 
@@ -36,7 +53,7 @@ bash ~/jodo/scripts/deploy.sh
    - `LIGHTSAIL_SSH_KEY` — full private key text (including `BEGIN` / `END` lines)
 3. Push to `main` (or run the **Deploy to Lightsail** workflow manually).
 
-The workflow SSHs into the instance and runs `scripts/deploy.sh` (`git pull` → `npm ci` → `build` → `pm2 restart` → reload nginx).
+The workflow first runs automated tests and a production build. Only if that succeeds does it SSH into the instance and run `scripts/deploy.sh` (`git pull` → `npm ci` → `build` → `pm2 restart` → reload nginx).
 
 ## Security notes
 

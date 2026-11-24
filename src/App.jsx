@@ -73,8 +73,8 @@ const content = {
         description: "High-energy hybrid capacitor series data and specifications."
       },
       about: {
-        title: "About",
-        description: "Learn about JODO and our modernization approach."
+        title: "About JODO",
+        description: "About Shanghai JODO Industry Co., Ltd., partnerships, history, and one-stop service."
       },
       certifications: {
         title: "Certifications",
@@ -94,8 +94,30 @@ const content = {
       certifications: "Quality & Certifications",
       contact: "Contact JODO"
     },
-    aboutText:
-      "This modernization keeps JODO's technical credibility while presenting a cleaner, faster, and mobile-friendly experience for engineers and procurement teams.",
+    aboutPage: {
+      goal: "JODO's goal is to deliver products at the highest world-class standard.",
+      overview: [
+        "With a customer-centric development strategy, JODO uses a broad domestic and international marketing network to respond quickly and provide one-stop service.",
+        "R&D capability is a core competitiveness. Shanghai JODO Industry Co., Ltd. is a strategic pillar for Evans and Admat worldwide, contributing to local development and participating in global projects with these partners.",
+        "By combining local strengths with international resources, JODO aims to deliver tailored solutions for customers, returns for shareholders, and opportunities for employees—and to become an outstanding enterprise in China's electronics industry."
+      ],
+      historyTitle: "Our History",
+      history: [
+        "Founded in 2004 as Shanghai JODO Industry Co., Ltd., JODO began as the agent for Evans tantalum capacitors and is responsible for promotion and sales across mainland China.",
+        "JODO components are used in industrial, computer, automotive, consumer, communications, aviation, and medical electronics."
+      ],
+      innovationTitle: "Growth Through Innovation and Partnership",
+      innovation: [
+        "We push the limits of miniaturization and high performance.",
+        "EVANS and ADMAT are technology leaders and among the world's most advanced manufacturers of passive components."
+      ],
+      serviceTitle: "One-Stop Service",
+      service: [
+        "Customers can provide a bill of materials (BOM); JODO matches it to our product range so procurement can be consolidated with a single supplier.",
+        "We also offer free product samples to design engineers worldwide. Learn more at www.jodo.com.cn.",
+        "Our line spans specialty and general-purpose parts—including resistors, capacitors, inductors, sensors, and related filters—supported by service, innovation, quality, and cost control."
+      ]
+    },
     certifications: [
       "ISO 9000 quality process",
       "GJB9001B-2009 compliance",
@@ -342,8 +364,8 @@ const content = {
         description: "高能量混合电容系列参数与说明。"
       },
       about: {
-        title: "关于我们",
-        description: "了解 JODO 与网站现代化升级。"
+        title: "关于聚电",
+        description: "上海聚电实业有限公司简介、合作伙伴、历程与一站式服务。"
       },
       certifications: {
         title: "资质认证",
@@ -359,12 +381,34 @@ const content = {
       ranges: "电容值与电压选型",
       featured: "THQ 系列亮点",
       hybridSeries: "高能量混合电容系列",
-      about: "关于 JODO",
+      about: "关于聚电",
       certifications: "质量与认证",
       contact: "联系 JODO"
     },
-    aboutText:
-      "本次改版在保留 JODO 技术可信度的基础上，提供更清晰、更快速、且适配移动端的浏览体验，服务工程师与采购团队。",
+    aboutPage: {
+      goal: "聚电的目标是：提供世界最高水平的产品。",
+      overview: [
+        "以客户为中心的发展战略，凭借广泛的国内外营销网络，快速响应并提供“一站式”服务。",
+        "研发实力是核心竞争力。上海聚电实业有限公司是 Evans 与 Admat 在全球的战略支柱之一，既负责本地化开发，也参与其全球项目。",
+        "依托本地优势与国际资源，为客户提供量身定制的解决方案，为股东创造回报，为员工提供机会，努力成为中国电子行业的优秀企业。"
+      ],
+      historyTitle: "聚电的历程",
+      history: [
+        "2004 年成立上海聚电实业有限公司，作为 Evans 钽电容器代理，负责中国大陆地区的全面推广与销售。",
+        "聚电元器件广泛应用于工业、计算机、汽车、消费、通讯、航空及医疗等领域的电子设备。"
+      ],
+      innovationTitle: "通过创新和合作来促进发展",
+      innovation: [
+        "不断推动小型化与高性能的极限。",
+        "EVANS 与 ADMAT 是技术领先者，也是全球先进的被动元件制造商。"
+      ],
+      serviceTitle: "“一站式”服务",
+      service: [
+        "客户可提供物料清单（BOM），聚电按产品线进行匹配，实现单一供应商采购的便利。",
+        "同时为全球设计工程师提供免费样品支持。详情见 www.jodo.com.cn。",
+        "产品线覆盖专用与通用元器件，包括电阻、电容、电感、传感器及相关滤波器等，以服务、创新、质量与成本控制持续提升竞争力。"
+      ]
+    },
     certifications: ["ISO 9000 质量体系", "GJB9001B-2009 体系符合性", "高可靠性标准"],
     contact: {
       email: "邮箱: sales@jodo.com.cn",
@@ -590,8 +634,8 @@ const content = {
         description: "高エネルギー・ハイブリッドコンデンサシリーズ。"
       },
       about: {
-        title: "会社情報",
-        description: "JODO とサイト刷新について。"
+        title: "JODO について",
+        description: "上海聚電実業有限公司の概要、パートナー、沿革、ワンストップサービス。"
       },
       certifications: {
         title: "認証",
@@ -611,8 +655,30 @@ const content = {
       certifications: "品質・認証",
       contact: "JODO への連絡"
     },
-    aboutText:
-      "今回の刷新では、JODO の技術的信頼性を維持しながら、より見やすく高速でモバイル対応の体験を実現します。",
+    aboutPage: {
+      goal: "JODO の目標は、世界最高水準の製品を提供することです。",
+      overview: [
+        "顧客中心の成長戦略のもと、国内外の幅広い販売ネットワークにより迅速に対応し、ワンストップサービスを提供します。",
+        "研究開発力は中核競争力です。上海聚電実業有限公司は Evans および Admat のグローバル戦略の重要な柱として、現地開発を担い、世界プロジェクトにも参画しています。",
+        "現地の強みと国際リソースを活かし、顧客には最適なソリューションを、株主にはリターンを、社員には機会を提供し、中国の電子産業における優れた企業を目指します。"
+      ],
+      historyTitle: "沿革",
+      history: [
+        "2004年に上海聚電実業有限公司として設立。Evans タンタルコンデンサの代理店として、中国大陸での販売・展開を担当してきました。",
+        "JODO の部品は、産業、コンピュータ、自動車、民生、通信、航空、医療などの電子機器に広く使用されています。"
+      ],
+      innovationTitle: "イノベーションと協業による成長",
+      innovation: [
+        "小型化と高性能の限界に挑戦し続けます。",
+        "EVANS と ADMAT は技術リーダーであり、世界でも先進的な受動部品メーカーです。"
+      ],
+      serviceTitle: "ワンストップサービス",
+      service: [
+        "お客様は部品表（BOM）をご提示いただければ、当社製品ラインと照合し、単一サプライヤでの調達を支援します。",
+        "また、世界中の設計エンジニアに無償サンプルを提供しています。詳細は www.jodo.com.cn をご覧ください。",
+        "製品は特殊品から汎用品まで幅広く、抵抗、コンデンサ、インダクタ、センサ、各種フィルタなどを扱い、サービス・革新・品質・コスト管理で競争力を高めています。"
+      ]
+    },
     certifications: ["ISO 9000 品質プロセス", "GJB9001B-2009 準拠", "高信頼性基準"],
     contact: {
       email: "メール: sales@jodo.com.cn",
@@ -1078,8 +1144,23 @@ function App() {
                 <section className="section">
                   <div className="container">
                     <h3>{t.sections.about}</h3>
-                    <article className="card">
-                      <p>{t.aboutText}</p>
+                    <article className="card about-page">
+                      <p className="about-goal">{t.aboutPage.goal}</p>
+                      {t.aboutPage.overview.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                      <h4>{t.aboutPage.historyTitle}</h4>
+                      {t.aboutPage.history.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                      <h4>{t.aboutPage.innovationTitle}</h4>
+                      {t.aboutPage.innovation.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                      <h4>{t.aboutPage.serviceTitle}</h4>
+                      {t.aboutPage.service.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
                     </article>
                   </div>
                 </section>

@@ -536,6 +536,23 @@ body {
   color: #424245;
 }
 
+.about-page .about-goal {
+  font-size: 1.15rem;
+  font-weight: 650;
+  color: #1d1d1f;
+  margin-top: 0;
+}
+
+.about-page h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.about-page p {
+  line-height: 1.65;
+  margin: 0.65rem 0;
+}
+
 .table-wrap {
   overflow-x: auto;
 }

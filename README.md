@@ -17,6 +17,27 @@ Modern React + Vite starter project for redesigning the JODO corporate website.
 
 The sample catalog database `test-JODOUK.mdb` is included for local testing.
 
+## Deploy to AWS Lightsail
+
+Code on the server does **not** update by itself. After the first manual setup, use either:
+
+### A) One-command update on the server
+
+```bash
+bash ~/jodo/scripts/deploy.sh
+```
+
+### B) Auto-deploy on push to `main` (GitHub Actions)
+
+1. In Lightsail → instance → **Connect** → download / copy the SSH private key.
+2. In GitHub repo → **Settings → Secrets and variables → Actions**, add:
+   - `LIGHTSAIL_HOST` — public IPv4 (e.g. `51.20.34.122`)
+   - `LIGHTSAIL_USER` — usually `admin`
+   - `LIGHTSAIL_SSH_KEY` — full private key text (including `BEGIN` / `END` lines)
+3. Push to `main` (or run the **Deploy to Lightsail** workflow manually).
+
+The workflow SSHs into the instance and runs `scripts/deploy.sh` (`git pull` → `npm ci` → `build` → `pm2 restart` → reload nginx).
+
 ## Security notes
 
 - Public API responses intentionally omit pricing fields; source `unit_price` data in the MDB is not deleted.

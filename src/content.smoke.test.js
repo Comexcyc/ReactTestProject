@@ -51,4 +51,12 @@ describe("localized content smoke checks", () => {
     expect(appSource).toContain('to="/about#contact"');
     expect(appSource).toContain('to="/about#certifications"');
   });
+
+  it("exposes Home in the primary nav for all locales", () => {
+    expect(appSource).toContain('home: "Home"');
+    expect(appSource).toContain('home: "首页"');
+    expect(appSource).toContain('home: "ホーム"');
+    expect(appSource).toContain('{ to: "/", label: t.nav.home, end: true }');
+  });
 });
+

@@ -548,6 +548,10 @@ body {
   margin-bottom: 0.55rem;
 }
 
+.about-page #contact {
+  scroll-margin-top: 5.5rem;
+}
+
 .about-page p {
   line-height: 1.65;
   margin: 0.65rem 0;

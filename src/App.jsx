@@ -116,7 +116,8 @@ const content = {
         "Customers can provide a bill of materials (BOM); JODO matches it to our product range so procurement can be consolidated with a single supplier.",
         "We also offer free product samples to design engineers worldwide. Learn more at www.jodo.com.cn.",
         "Our line spans specialty and general-purpose parts—including resistors, capacitors, inductors, sensors, and related filters—supported by service, innovation, quality, and cost control."
-      ]
+      ],
+      contactTitle: "Contact Us"
     },
     certifications: [
       "ISO 9000 quality process",
@@ -407,7 +408,8 @@ const content = {
         "客户可提供物料清单（BOM），聚电按产品线进行匹配，实现单一供应商采购的便利。",
         "同时为全球设计工程师提供免费样品支持。详情见 www.jodo.com.cn。",
         "产品线覆盖专用与通用元器件，包括电阻、电容、电感、传感器及相关滤波器等，以服务、创新、质量与成本控制持续提升竞争力。"
-      ]
+      ],
+      contactTitle: "联系我们"
     },
     certifications: ["ISO 9000 质量体系", "GJB9001B-2009 体系符合性", "高可靠性标准"],
     contact: {
@@ -677,7 +679,8 @@ const content = {
         "お客様は部品表（BOM）をご提示いただければ、当社製品ラインと照合し、単一サプライヤでの調達を支援します。",
         "また、世界中の設計エンジニアに無償サンプルを提供しています。詳細は www.jodo.com.cn をご覧ください。",
         "製品は特殊品から汎用品まで幅広く、抵抗、コンデンサ、インダクタ、センサ、各種フィルタなどを扱い、サービス・革新・品質・コスト管理で競争力を高めています。"
-      ]
+      ],
+      contactTitle: "お問い合わせ"
     },
     certifications: ["ISO 9000 品質プロセス", "GJB9001B-2009 準拠", "高信頼性基準"],
     contact: {
@@ -874,7 +877,7 @@ function DocumentTitleUpdater({ t }) {
       "/hybrid-series": t.meta.hybridSeries,
       "/about": t.meta.about,
       "/certifications": t.meta.certifications,
-      "/contact": t.meta.contact
+      "/contact": t.meta.about
     };
 
     return routes[location.pathname] ?? t.meta.default;
@@ -882,6 +885,51 @@ function DocumentTitleUpdater({ t }) {
 
   useDocumentTitle(`${meta.title} | JODO`, meta.description);
   return null;
+}
+
+function AboutPage({ t }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash !== "#contact") {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
+
+  return (
+    <section className="section">
+      <div className="container">
+        <h3>{t.sections.about}</h3>
+        <article className="card about-page">
+          <p className="about-goal">{t.aboutPage.goal}</p>
+          {t.aboutPage.overview.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <h4>{t.aboutPage.historyTitle}</h4>
+          {t.aboutPage.history.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <h4>{t.aboutPage.innovationTitle}</h4>
+          {t.aboutPage.innovation.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <h4>{t.aboutPage.serviceTitle}</h4>
+          {t.aboutPage.service.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <h4 id="contact">{t.aboutPage.contactTitle}</h4>
+          <p>{t.contact.email}</p>
+          <p>{t.contact.website}</p>
+        </article>
+      </div>
+    </section>
+  );
 }
 
 function App() {
@@ -911,7 +959,7 @@ function App() {
     };
   }, [menuOpen]);
 
-  // Keep selection-guide / featured in code for later; hide from nav for now.
+  // Keep selection-guide / featured / standalone contact in code; hide from nav for now.
   const navItems = useMemo(
     () =>
       [
@@ -922,7 +970,7 @@ function App() {
         { to: "/hybrid-series", label: t.nav.hybridSeries },
         { to: "/about", label: t.nav.about },
         { to: "/certifications", label: t.nav.certifications },
-        { to: "/contact", label: t.nav.contact }
+        { to: "/contact", label: t.nav.contact, hidden: true }
       ].filter((item) => !item.hidden),
     [t]
   );
@@ -1010,7 +1058,7 @@ function App() {
                         <h2>{t.hero.title}</h2>
                         <p>{t.hero.body}</p>
                         <div className="hero-actions">
-                          <NavLink to="/contact" className="btn primary">
+                          <NavLink to="/about#contact" className="btn primary">
                             {t.hero.primaryBtn}
                           </NavLink>
                           <NavLink to="/catalog" className="btn ghost">
@@ -1138,34 +1186,7 @@ function App() {
                 </section>
               }
             />
-            <Route
-              path="/about"
-              element={
-                <section className="section">
-                  <div className="container">
-                    <h3>{t.sections.about}</h3>
-                    <article className="card about-page">
-                      <p className="about-goal">{t.aboutPage.goal}</p>
-                      {t.aboutPage.overview.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                      <h4>{t.aboutPage.historyTitle}</h4>
-                      {t.aboutPage.history.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                      <h4>{t.aboutPage.innovationTitle}</h4>
-                      {t.aboutPage.innovation.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                      <h4>{t.aboutPage.serviceTitle}</h4>
-                      {t.aboutPage.service.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </article>
-                  </div>
-                </section>
-              }
-            />
+            <Route path="/about" element={<AboutPage t={t} />} />
             <Route
               path="/certifications"
               element={
@@ -1188,20 +1209,7 @@ function App() {
               element={<ProductCatalogPage t={t} language={language} />}
             />
             <Route path="/query" element={<QueryRedirect />} />
-            <Route
-              path="/contact"
-              element={
-                <section className="section">
-                  <div className="container">
-                    <h3>{t.sections.contact}</h3>
-                    <article className="card">
-                      <p>{t.contact.email}</p>
-                      <p>{t.contact.website}</p>
-                    </article>
-                  </div>
-                </section>
-              }
-            />
+            <Route path="/contact" element={<Navigate to="/about#contact" replace />} />
             <Route path="*" element={<Navigate to="/products" replace />} />
             </Routes>
           </PageTransition>

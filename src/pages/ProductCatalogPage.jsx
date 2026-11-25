@@ -247,6 +247,19 @@ function ProductCatalogPage({ t, language }) {
       <div className="container">
         <h3 className="section-heading">{t.catalog.title}</h3>
         <p className="catalog-intro">{t.catalog.intro}</p>
+
+        <div className="product-lines">
+          <h4 className="product-lines-title">{t.catalog.linesTitle}</h4>
+          <ul className="product-lines-list">
+            {t.products.map((product) => (
+              <li key={product.name}>
+                <strong>{product.name}</strong>
+                <span>{product.description}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <GlobalSearch t={t} onSearch={handleQuickSearch} />
         <p className="catalog-search-hint">{t.search.heroHint}</p>
 

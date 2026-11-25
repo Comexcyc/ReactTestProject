@@ -16,13 +16,16 @@ describe("localized content smoke checks", () => {
     expect(aboutBlocks.length).toBe(3);
   });
 
-  it("keeps selection-guide, featured, and contact hidden from nav", () => {
+  it("keeps selection-guide, featured, contact, and certifications hidden from nav", () => {
     expect(appSource).toContain('to: "/selection-guide"');
     expect(appSource).toContain('to: "/featured"');
     expect(appSource).toContain('to: "/contact"');
+    expect(appSource).toContain('to: "/certifications"');
     expect(appSource).toContain("hidden: true");
     expect(appSource).toContain(".filter((item) => !item.hidden)");
     expect(appSource).toContain('id="contact"');
+    expect(appSource).toContain('id="certifications"');
     expect(appSource).toContain('to="/about#contact"');
+    expect(appSource).toContain('to="/about#certifications"');
   });
 });

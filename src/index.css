@@ -548,7 +548,8 @@ body {
   margin-bottom: 0.55rem;
 }
 
-.about-page #contact {
+.about-page #contact,
+.about-page #certifications {
   scroll-margin-top: 5.5rem;
 }
 

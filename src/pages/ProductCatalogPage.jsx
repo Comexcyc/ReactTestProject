@@ -250,14 +250,14 @@ function ProductCatalogPage({ t, language }) {
 
         <div className="product-lines">
           <h4 className="product-lines-title">{t.catalog.linesTitle}</h4>
-          <ul className="product-lines-list">
+          <div className="grid">
             {t.products.map((product) => (
-              <li key={product.name}>
-                <strong>{product.name}</strong>
-                <span>{product.description}</span>
-              </li>
+              <article key={product.name} className="card">
+                <h4>{product.name}</h4>
+                <p>{product.description}</p>
+              </article>
             ))}
-          </ul>
+          </div>
         </div>
 
         <GlobalSearch t={t} onSearch={handleQuickSearch} />

@@ -8,9 +8,8 @@ import {
   useLocation
 } from "react-router-dom";
 import PageTransition from "./components/PageTransition.jsx";
-import HeroBackground from "./components/HeroBackground.jsx";
 import ScrollReveal from "./components/ScrollReveal.jsx";
-import TrustBar from "./components/TrustBar.jsx";
+import HomePage from "./pages/HomePage.jsx";
 import ProductCatalogPage from "./pages/ProductCatalogPage.jsx";
 import { useDocumentTitle } from "./hooks/useDocumentTitle.js";
 
@@ -37,6 +36,25 @@ const content = {
       secondaryBtn: "Explore Products",
       visualTags: ["Aerospace", "Satellite", "Space-grade components"]
     },
+    home: {
+      focusTitle: "What JODO does",
+      lead: "Shanghai JODO Industry Co., Ltd. supplies high-reliability passive components and engineering support for mission-critical electronics.",
+      focusItems: [
+        {
+          title: "High-reliability components",
+          text: "Capacitors and related parts for aerospace, industrial, communications, and medical applications."
+        },
+        {
+          title: "Global partnerships",
+          text: "Strategic collaboration with Evans and Admat for advanced passive-component solutions."
+        },
+        {
+          title: "One-stop support",
+          text: "BOM matching, samples, and engineering assistance from selection through procurement."
+        }
+      ],
+      aboutBtn: "About JODO"
+    },
     trust: {
       ariaLabel: "Company credentials",
       parts: "Part numbers in catalog",
@@ -52,13 +70,18 @@ const content = {
         description:
           "JODO high-reliability electronic components for aerospace, defense, and industrial applications."
       },
+      home: {
+        title: "Home",
+        description:
+          "JODO high-reliability electronic components and engineering support for demanding industries."
+      },
       products: {
         title: "Products",
-        description: "Explore JODO core capacitor product lines and engineering capabilities."
+        description: "Browse JODO product lines and search live catalog part numbers."
       },
       catalog: {
-        title: "Product Catalog",
-        description: "Browse and search JODO part numbers from the live MDB catalog."
+        title: "Products",
+        description: "Browse JODO product lines and search live catalog part numbers."
       },
       ranges: {
         title: "Selection Guide",
@@ -136,9 +159,10 @@ const content = {
         "Search by part number, product category (e.g. solid tantalum), or model series."
     },
     catalog: {
-      title: "Product Catalog",
+      title: "Products",
       intro:
-        "Browse product families and search part numbers in one place, powered by the live MDB catalog.",
+        "Explore core product lines, then browse families and search part numbers in the live MDB catalog.",
+      linesTitle: "Core product lines",
       categories: "Categories",
       models: "models",
       modelCount: "Model series",
@@ -331,6 +355,25 @@ const content = {
       secondaryBtn: "查看产品",
       visualTags: ["航空航天", "卫星应用", "宇航级元器件"]
     },
+    home: {
+      focusTitle: "聚电做什么",
+      lead: "上海聚电实业有限公司专注于高可靠被动元件供应与工程支持，服务关键电子设备与系统。",
+      focusItems: [
+        {
+          title: "高可靠元器件",
+          text: "面向航空航天、工业、通讯与医疗等场景的电容及相关产品。"
+        },
+        {
+          title: "全球合作伙伴",
+          text: "与 Evans、Admat 战略协作，引入先进被动元件解决方案。"
+        },
+        {
+          title: "一站式支持",
+          text: "从选型、样品到 BOM 匹配与采购，提供工程与供应协同服务。"
+        }
+      ],
+      aboutBtn: "关于聚电"
+    },
     trust: {
       ariaLabel: "企业资质",
       parts: "目录料号数量",
@@ -345,13 +388,17 @@ const content = {
         title: "工业元器件",
         description: "JODO 高可靠性电子元器件，服务航空航天、国防与工业领域。"
       },
+      home: {
+        title: "首页",
+        description: "JODO 高可靠电子元器件与工程支持，服务高要求行业。"
+      },
       products: {
         title: "产品",
-        description: "了解 JODO 核心电容产品线与工程能力。"
+        description: "浏览 JODO 产品线并搜索实时产品目录料号。"
       },
       catalog: {
-        title: "产品目录",
-        description: "浏览并搜索 JODO 实时 MDB 产品目录。"
+        title: "产品",
+        description: "浏览 JODO 产品线并搜索实时产品目录料号。"
       },
       ranges: {
         title: "选型指南",
@@ -424,8 +471,9 @@ const content = {
       heroHint: "支持按料号、产品分类（如固体电解质钽电容器）或系列型号搜索。"
     },
     catalog: {
-      title: "产品目录",
-      intro: "在同一页面浏览产品分类并查询料号，数据来自 MDB 实时目录。",
+      title: "产品",
+      intro: "先了解核心产品线，再按分类浏览并查询料号，数据来自 MDB 实时目录。",
+      linesTitle: "核心产品线",
       categories: "产品分类",
       models: "个型号",
       modelCount: "系列型号",
@@ -603,6 +651,25 @@ const content = {
       secondaryBtn: "製品を見る",
       visualTags: ["航空宇宙", "衛星用途", "宇宙グレード部品"]
     },
+    home: {
+      focusTitle: "JODO の事業",
+      lead: "上海聚電実業有限公司は、高信頼性パッシブ部品の供給とエンジニアリング支援を通じて、重要電子機器を支えます。",
+      focusItems: [
+        {
+          title: "高信頼性部品",
+          text: "航空宇宙、産業、通信、医療向けのコンデンサおよび関連部品。"
+        },
+        {
+          title: "グローバルパートナー",
+          text: "Evans および Admat との戦略提携により先進パッシブソリューションを提供。"
+        },
+        {
+          title: "ワンストップ支援",
+          text: "選定からサンプル、BOM 照合、調達まで一貫した技術・供給サポート。"
+        }
+      ],
+      aboutBtn: "会社情報"
+    },
     trust: {
       ariaLabel: "企業実績",
       parts: "カタログ部品数",
@@ -617,13 +684,17 @@ const content = {
         title: "産業用部品",
         description: "航空宇宙・防衛・産業向けの JODO 高信頼性電子部品。"
       },
+      home: {
+        title: "ホーム",
+        description: "高信頼性電子部品とエンジニアリング支援を提供する JODO。"
+      },
       products: {
         title: "製品",
-        description: "JODO の主要コンデンサ製品ラインをご覧ください。"
+        description: "JODO 製品ラインの閲覧とライブカタログ部品検索。"
       },
       catalog: {
-        title: "製品カタログ",
-        description: "ライブ MDB カタログから部品を検索・閲覧できます。"
+        title: "製品",
+        description: "JODO 製品ラインの閲覧とライブカタログ部品検索。"
       },
       ranges: {
         title: "選定ガイド",
@@ -697,9 +768,10 @@ const content = {
         "部品番号、製品カテゴリ（例：固体電解質タンタルコンデンサ）、シリーズ名で検索できます。"
     },
     catalog: {
-      title: "製品カタログ",
+      title: "製品",
       intro:
-        "MDB のライブカタログから、製品カテゴリの閲覧と部品検索を同一ページで行えます。",
+        "主要製品ラインを確認したうえで、カテゴリ閲覧と部品検索をライブ MDB カタログで行えます。",
+      linesTitle: "主要製品ライン",
       categories: "カテゴリ",
       models: "モデル",
       modelCount: "シリーズ数",
@@ -866,15 +938,16 @@ const content = {
 
 function QueryRedirect() {
   const { search } = useLocation();
-  return <Navigate to={`/catalog${search}`} replace />;
+  return <Navigate to={`/products${search}`} replace />;
 }
 
 function DocumentTitleUpdater({ t }) {
   const location = useLocation();
   const meta = useMemo(() => {
     const routes = {
+      "/": t.meta.home,
       "/products": t.meta.products,
-      "/catalog": t.meta.catalog,
+      "/catalog": t.meta.products,
       "/selection-guide": t.meta.ranges,
       "/featured": t.meta.featured,
       "/hybrid-series": t.meta.hybridSeries,
@@ -969,12 +1042,12 @@ function App() {
     };
   }, [menuOpen]);
 
-  // Keep selection-guide / featured / contact / certifications in code; hide from nav for now.
+  // Keep selection-guide / featured / catalog / contact / certifications in code; hide from nav for now.
   const navItems = useMemo(
     () =>
       [
         { to: "/products", label: t.nav.products },
-        { to: "/catalog", label: t.nav.catalog },
+        { to: "/catalog", label: t.nav.catalog, hidden: true },
         { to: "/selection-guide", label: t.nav.ranges, hidden: true },
         { to: "/featured", label: t.nav.featured, hidden: true },
         { to: "/hybrid-series", label: t.nav.hybridSeries },
@@ -1056,52 +1129,10 @@ function App() {
         <main>
           <PageTransition>
             <Routes>
-            <Route path="/" element={<Navigate to="/products" replace />} />
+            <Route path="/" element={<HomePage t={t} />} />
             <Route
               path="/products"
-              element={
-                <>
-                  <section className="hero">
-                    <div className="container hero-inner">
-                      <div className="hero-content">
-                        <p className="eyebrow">{t.hero.eyebrow}</p>
-                        <h2>{t.hero.title}</h2>
-                        <p>{t.hero.body}</p>
-                        <div className="hero-actions">
-                          <NavLink to="/about#contact" className="btn primary">
-                            {t.hero.primaryBtn}
-                          </NavLink>
-                          <NavLink to="/catalog" className="btn ghost">
-                            {t.hero.secondaryBtn}
-                          </NavLink>
-                        </div>
-                        <div className="tech-metrics">
-                          <span>220,000uF</span>
-                          <span>0.0025 ohm ESR</span>
-                          <span>MTBF 10,000,000h</span>
-                        </div>
-                      </div>
-                      <HeroBackground labels={t.hero.visualTags} />
-                    </div>
-                  </section>
-                  <TrustBar t={t} />
-                  <ScrollReveal>
-                    <section className="section">
-                      <div className="container">
-                        <h3 className="section-heading">{t.sections.products}</h3>
-                        <div className="grid">
-                          {t.products.map((product) => (
-                            <article key={product.name} className="card">
-                              <h4>{product.name}</h4>
-                              <p>{product.description}</p>
-                            </article>
-                          ))}
-                        </div>
-                      </div>
-                    </section>
-                  </ScrollReveal>
-                </>
-              }
+              element={<ProductCatalogPage t={t} language={language} />}
             />
             <Route
               path="/selection-guide"
@@ -1201,13 +1232,10 @@ function App() {
               path="/certifications"
               element={<Navigate to="/about#certifications" replace />}
             />
-            <Route
-              path="/catalog"
-              element={<ProductCatalogPage t={t} language={language} />}
-            />
+            <Route path="/catalog" element={<QueryRedirect />} />
             <Route path="/query" element={<QueryRedirect />} />
             <Route path="/contact" element={<Navigate to="/about#contact" replace />} />
-            <Route path="*" element={<Navigate to="/products" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </PageTransition>
         </main>

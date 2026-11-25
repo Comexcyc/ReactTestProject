@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import GlobalSearch from "../components/GlobalSearch.jsx";
 import ProductDetailDrawer from "../components/ProductDetailDrawer.jsx";
 import { CatalogSkeleton, TableSkeleton } from "../components/Skeleton.jsx";
@@ -29,8 +29,22 @@ function buildFormFromParams(searchParams) {
 }
 
 function ProductCatalogPage({ t, language }) {
+  const location = useLocation();
   const [searchParams] = useSearchParams();
-  const searchSectionRef = useRef(null);
+  const resultsSectionRef = useRef(null);
+
+  useEffect(() => {
+    const targetId = location.hash.replace(/^#/, "");
+    if (!targetId) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
   const [catalog, setCatalog] = useState([]);
   const [selectedSeriesId, setSelectedSeriesId] = useState(null);
   const [catalogLoading, setCatalogLoading] = useState(true);
@@ -77,7 +91,9 @@ function ProductCatalogPage({ t, language }) {
         setResult(data);
 
         if (scrollToResults) {
-          searchSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => {
+            resultsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 50);
         }
       } catch (err) {
         setResult(null);
@@ -243,13 +259,20 @@ function ProductCatalogPage({ t, language }) {
   }
 
   return (
-    <section className="section">
+    <section className="section products-page">
       <div className="container">
-        <h3 className="section-heading">{t.catalog.title}</h3>
-        <p className="catalog-intro">{t.catalog.intro}</p>
+        <header className="products-header">
+          <h3 className="section-heading">{t.catalog.title}</h3>
+          <p className="catalog-intro">{t.catalog.intro}</p>
+          <nav className="products-jump" aria-label={t.catalog.jumpLabel}>
+            <a href="#product-lines">{t.catalog.linesTitle}</a>
+            <a href="#hybrid-series">{t.sections.hybridSeries}</a>
+            <a href="#catalog-browse">{t.catalog.browseTitle}</a>
+          </nav>
+        </header>
 
-        <div className="product-lines">
-          <h4 className="product-lines-title">{t.catalog.linesTitle}</h4>
+        <div id="product-lines" className="product-block">
+          <h4 className="product-block-title">{t.catalog.linesTitle}</h4>
           <div className="grid">
             {t.products.map((product) => (
               <article key={product.name} className="card">
@@ -260,8 +283,48 @@ function ProductCatalogPage({ t, language }) {
           </div>
         </div>
 
-        <GlobalSearch t={t} onSearch={handleQuickSearch} />
-        <p className="catalog-search-hint">{t.search.heroHint}</p>
+        <div id="hybrid-series" className="product-block">
+          <h4 className="product-block-title">{t.sections.hybridSeries}</h4>
+          <p className="hybrid-overview">{t.hybridSeries.overview}</p>
+          <ul className="hybrid-highlights">
+            {t.hybridSeries.highlights.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <article className="card hybrid-table-card">
+            <h5>{t.hybridSeries.tableTitle}</h5>
+            <div className="table-wrap">
+              <table className="spec-table">
+                <thead>
+                  <tr>
+                    <th>{t.hybridSeries.columns.model}</th>
+                    <th>{t.hybridSeries.columns.capacitance}</th>
+                    <th>{t.hybridSeries.columns.voltage}</th>
+                    <th>{t.hybridSeries.columns.temp}</th>
+                    <th>{t.hybridSeries.columns.note}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.hybridSeries.rows.map((row) => (
+                    <tr key={row.model}>
+                      <td>{row.model}</td>
+                      <td>{row.capacitance}</td>
+                      <td>{row.voltage}</td>
+                      <td>{row.temp}</td>
+                      <td>{row.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+        <div id="catalog-browse" className="product-block">
+          <h4 className="product-block-title">{t.catalog.browseTitle}</h4>
+          <p className="catalog-intro">{t.catalog.browseIntro}</p>
+          <GlobalSearch t={t} onSearch={handleQuickSearch} />
+          <p className="catalog-search-hint">{t.search.heroHint}</p>
 
         {catalogLoading && <CatalogSkeleton />}
         {catalogError && <p className="query-error">{catalogError}</p>}
@@ -350,8 +413,12 @@ function ProductCatalogPage({ t, language }) {
           </div>
         )}
 
-        <div ref={searchSectionRef} className="catalog-search-section">
-          <h4>{t.query.title}</h4>
+        <div
+          id="catalog-results"
+          className="catalog-search-section"
+          ref={resultsSectionRef}
+        >
+          <h5 className="catalog-advanced-title">{t.query.title}</h5>
           <p className="query-intro">{t.query.intro}</p>
 
           <form className="query-form card" onSubmit={handleSearch}>
@@ -546,6 +613,7 @@ function ProductCatalogPage({ t, language }) {
             t={t}
             onClose={() => setSelectedRow(null)}
           />
+        </div>
         </div>
       </div>
     </section>

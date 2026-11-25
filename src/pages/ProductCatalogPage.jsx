@@ -31,7 +31,7 @@ function buildFormFromParams(searchParams) {
 function ProductCatalogPage({ t, language }) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const searchSectionRef = useRef(null);
+  const resultsSectionRef = useRef(null);
 
   useEffect(() => {
     const targetId = location.hash.replace(/^#/, "");
@@ -91,7 +91,9 @@ function ProductCatalogPage({ t, language }) {
         setResult(data);
 
         if (scrollToResults) {
-          searchSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => {
+            resultsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 50);
         }
       } catch (err) {
         setResult(null);
@@ -318,7 +320,7 @@ function ProductCatalogPage({ t, language }) {
           </article>
         </div>
 
-        <div id="catalog-browse" className="product-block" ref={searchSectionRef}>
+        <div id="catalog-browse" className="product-block">
           <h4 className="product-block-title">{t.catalog.browseTitle}</h4>
           <p className="catalog-intro">{t.catalog.browseIntro}</p>
           <GlobalSearch t={t} onSearch={handleQuickSearch} />
@@ -411,7 +413,11 @@ function ProductCatalogPage({ t, language }) {
           </div>
         )}
 
-        <div className="catalog-search-section">
+        <div
+          id="catalog-results"
+          className="catalog-search-section"
+          ref={resultsSectionRef}
+        >
           <h5 className="catalog-advanced-title">{t.query.title}</h5>
           <p className="query-intro">{t.query.intro}</p>
 

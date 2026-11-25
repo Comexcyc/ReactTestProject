@@ -184,6 +184,7 @@ body {
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid rgba(29, 29, 31, 0.08);
+  scroll-margin-top: 5.5rem;
 }
 
 .catalog-search-section h4 {
@@ -378,7 +379,8 @@ body {
 .btn.primary {
   background: #0071e3;
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.2);
+  border: 1px solid #0071e3;
+  box-shadow: none;
 }
 
 .btn.ghost {

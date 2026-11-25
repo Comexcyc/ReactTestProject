@@ -53,7 +53,6 @@ const content = {
           text: "BOM matching, samples, and engineering assistance from selection through procurement."
         }
       ],
-      productsBtn: "Browse products",
       aboutBtn: "About JODO"
     },
     trust: {
@@ -373,7 +372,6 @@ const content = {
           text: "从选型、样品到 BOM 匹配与采购，提供工程与供应协同服务。"
         }
       ],
-      productsBtn: "浏览产品",
       aboutBtn: "关于聚电"
     },
     trust: {
@@ -670,7 +668,6 @@ const content = {
           text: "選定からサンプル、BOM 照合、調達まで一貫した技術・供給サポート。"
         }
       ],
-      productsBtn: "製品を見る",
       aboutBtn: "会社情報"
     },
     trust: {

@@ -38,9 +38,6 @@ function HomePage({ t }) {
               ))}
             </div>
             <div className="home-actions">
-              <NavLink to="/products" className="btn primary">
-                {t.home.productsBtn}
-              </NavLink>
               <NavLink to="/about" className="btn ghost">
                 {t.home.aboutBtn}
               </NavLink>

@@ -17,6 +17,7 @@ const content = {
   en: {
     langCode: "en",
     nav: {
+      home: "Home",
       products: "Products",
       catalog: "Catalog",
       ranges: "Selection Guide",
@@ -340,6 +341,7 @@ const content = {
   zh: {
     langCode: "zh-CN",
     nav: {
+      home: "首页",
       products: "产品",
       catalog: "产品目录",
       ranges: "选型指南",
@@ -639,6 +641,7 @@ const content = {
   ja: {
     langCode: "ja",
     nav: {
+      home: "ホーム",
       products: "製品",
       catalog: "製品カタログ",
       ranges: "選定ガイド",
@@ -1056,6 +1059,7 @@ function App() {
   const navItems = useMemo(
     () =>
       [
+        { to: "/", label: t.nav.home, end: true },
         { to: "/products", label: t.nav.products },
         { to: "/catalog", label: t.nav.catalog, hidden: true },
         { to: "/selection-guide", label: t.nav.ranges, hidden: true },
@@ -1102,6 +1106,7 @@ function App() {
                   <NavLink
                     key={item.to}
                     to={item.to}
+                    end={item.end}
                     className={({ isActive }) => (isActive ? "active-link" : "")}
                     onClick={closeMenu}
                   >

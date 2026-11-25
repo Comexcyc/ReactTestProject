@@ -6,6 +6,10 @@ import { describe, expect, it } from "vitest";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appSource = readFileSync(path.join(__dirname, "App.jsx"), "utf8");
 const homeSource = readFileSync(path.join(__dirname, "pages/HomePage.jsx"), "utf8");
+const productsSource = readFileSync(
+  path.join(__dirname, "pages/ProductCatalogPage.jsx"),
+  "utf8"
+);
 
 describe("localized content smoke checks", () => {
   it("defines aboutPage and home content for en, zh, and ja", () => {
@@ -30,7 +34,11 @@ describe("localized content smoke checks", () => {
     expect(appSource).toContain("element={<QueryRedirect />}");
   });
 
-  it("keeps selection-guide, featured, catalog, contact, and certifications hidden from nav", () => {
+  it("folds hybrid series into products and keeps secondary routes hidden from nav", () => {
+    expect(productsSource).toContain('id="hybrid-series"');
+    expect(productsSource).toContain("t.hybridSeries.rows");
+    expect(appSource).toContain('to: "/hybrid-series"');
+    expect(appSource).toContain('to="/products#hybrid-series"');
     expect(appSource).toContain('to: "/selection-guide"');
     expect(appSource).toContain('to: "/featured"');
     expect(appSource).toContain('to: "/catalog"');

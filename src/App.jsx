@@ -161,8 +161,12 @@ const content = {
     catalog: {
       title: "Products",
       intro:
-        "Explore core product lines, then browse families and search part numbers in the live MDB catalog.",
+        "Core product lines, hybrid series highlights, and live catalog search in one place.",
       linesTitle: "Core product lines",
+      browseTitle: "Browse & search catalog",
+      browseIntro:
+        "Search by part number, category, or model series in the live MDB catalog.",
+      jumpLabel: "On this page",
       categories: "Categories",
       models: "models",
       modelCount: "Model series",
@@ -472,8 +476,11 @@ const content = {
     },
     catalog: {
       title: "产品",
-      intro: "先了解核心产品线，再按分类浏览并查询料号，数据来自 MDB 实时目录。",
+      intro: "核心产品线、混合电容系列亮点与实时目录查询，集中在同一页面。",
       linesTitle: "核心产品线",
+      browseTitle: "浏览与搜索目录",
+      browseIntro: "按料号、产品分类或系列型号，在 MDB 实时目录中搜索。",
+      jumpLabel: "本页导航",
       categories: "产品分类",
       models: "个型号",
       modelCount: "系列型号",
@@ -770,8 +777,11 @@ const content = {
     catalog: {
       title: "製品",
       intro:
-        "主要製品ラインを確認したうえで、カテゴリ閲覧と部品検索をライブ MDB カタログで行えます。",
+        "主要製品ライン、ハイブリッドシリーズのハイライト、ライブカタログ検索を一つのページに集約しています。",
       linesTitle: "主要製品ライン",
+      browseTitle: "カタログを閲覧・検索",
+      browseIntro: "ライブ MDB カタログで部品番号・カテゴリ・シリーズを検索できます。",
+      jumpLabel: "このページ内",
       categories: "カテゴリ",
       models: "モデル",
       modelCount: "シリーズ数",
@@ -1042,7 +1052,7 @@ function App() {
     };
   }, [menuOpen]);
 
-  // Keep selection-guide / featured / catalog / contact / certifications in code; hide from nav for now.
+  // Keep selection-guide / featured / catalog / hybrid-series / contact / certifications in code; hide from nav for now.
   const navItems = useMemo(
     () =>
       [
@@ -1050,7 +1060,7 @@ function App() {
         { to: "/catalog", label: t.nav.catalog, hidden: true },
         { to: "/selection-guide", label: t.nav.ranges, hidden: true },
         { to: "/featured", label: t.nav.featured, hidden: true },
-        { to: "/hybrid-series", label: t.nav.hybridSeries },
+        { to: "/hybrid-series", label: t.nav.hybridSeries, hidden: true },
         { to: "/about", label: t.nav.about },
         { to: "/certifications", label: t.nav.certifications, hidden: true },
         { to: "/contact", label: t.nav.contact, hidden: true }
@@ -1186,46 +1196,7 @@ function App() {
             />
             <Route
               path="/hybrid-series"
-              element={
-                <section className="section">
-                  <div className="container">
-                    <h3>{t.sections.hybridSeries}</h3>
-                    <p>{t.hybridSeries.overview}</p>
-                    <ul className="list">
-                      {t.hybridSeries.highlights.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <article className="card">
-                      <h4>{t.hybridSeries.tableTitle}</h4>
-                      <div className="table-wrap">
-                        <table className="spec-table">
-                          <thead>
-                            <tr>
-                              <th>{t.hybridSeries.columns.model}</th>
-                              <th>{t.hybridSeries.columns.capacitance}</th>
-                              <th>{t.hybridSeries.columns.voltage}</th>
-                              <th>{t.hybridSeries.columns.temp}</th>
-                              <th>{t.hybridSeries.columns.note}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {t.hybridSeries.rows.map((row) => (
-                              <tr key={row.model}>
-                                <td>{row.model}</td>
-                                <td>{row.capacitance}</td>
-                                <td>{row.voltage}</td>
-                                <td>{row.temp}</td>
-                                <td>{row.note}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </article>
-                  </div>
-                </section>
-              }
+              element={<Navigate to="/products#hybrid-series" replace />}
             />
             <Route path="/about" element={<AboutPage t={t} />} />
             <Route
